@@ -1,0 +1,28 @@
+{
+    "name": "yusam-hub/laravel-smarty",
+    "description": "yusam-hub/laravel-smarty",
+    "type": "package",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^9",
+        "smarty/smarty": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "YusamHub\\LaravelSmarty\\": "src/"
+        },
+        "files": [
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "YusamHub\\LaravelSmarty\\Tests\\": "tests/"
+        },
+        "files": [
+        ]
+    }
+}
