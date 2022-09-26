@@ -34,10 +34,13 @@ class LaravelSmartyServiceProvider extends ServiceProvider
     /**
      * @return array
      */
-    private function getPackageConfig()
+    private function getPackageConfig(): array
     {
-        $configSmartyFile = base_path('/config/view.php');
-        return (array) include($configSmartyFile);
+        $configSmartyFile = base_path('/config/smarty.php');
+        if (file_exists($configSmartyFile)) {
+            return (array) include($configSmartyFile);
+        }
+        return [];
     }
 
     /**
@@ -45,7 +48,7 @@ class LaravelSmartyServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->getAppView()->addExtension('tpl', 'smarty', function () {
 
@@ -54,7 +57,7 @@ class LaravelSmartyServiceProvider extends ServiceProvider
             return new LaravelSmartyViewEngine($smarty->getSmarty());
         });
 
-        $view_composers = config("view.smarty.view.composers", []);
+        $view_composers = config("smarty.composers", []);
 
         foreach($view_composers as $views => $callbacks) {
             foreach($callbacks as $callback) {
@@ -68,7 +71,7 @@ class LaravelSmartyServiceProvider extends ServiceProvider
     /**
      * @return Factory
      */
-    protected function getAppView()
+    protected function getAppView(): Factory
     {
         return $this->app['view'];
     }
@@ -77,7 +80,7 @@ class LaravelSmartyServiceProvider extends ServiceProvider
      * @return LaravelSmartyFactory
      * @throws BindingResolutionException
      */
-    protected function getSmartyView()
+    protected function getSmartyView(): LaravelSmartyFactory
     {
         return $this->app->make('Smarty');
     }

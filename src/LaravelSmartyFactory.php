@@ -18,7 +18,7 @@ class LaravelSmartyFactory extends Factory
     /**
      * @var LaravelSmarty
      */
-    protected $smarty;
+    protected LaravelSmarty $smarty;
 
     /**
      * SmartyFactory constructor.
@@ -40,8 +40,10 @@ class LaravelSmartyFactory extends Factory
 
         $this->smarty = new LaravelSmarty();
         $this->smarty->setViewFactory($this);
-        $this->smarty->addPluginsDir(isset($config['smarty']['pluginsDir']) ? $config['smarty']['pluginsDir'] : []);
-        $this->smartyInit(isset($config['smarty']['smarty']) ? $config['smarty']['smarty'] : []);
+
+        $this->smarty->addPluginsDir($config['pluginsDir'] ?? []);
+
+        $this->smartyInit($config['smarty'] ?? []);
     }
 
     /**
@@ -88,6 +90,31 @@ class LaravelSmartyFactory extends Factory
             return __($values[0]);
         });
 
+        if (!isset($config['debugging'])) {
+            $config['debugging'] = true;
+        }
+        if (!isset($config['compile_check'])) {
+            $config['compile_check'] = true;
+        }
+        if (!isset($config['caching'])) {
+            $config['caching'] = false;
+        }
+        if (!isset($config['cache_lifetime'])) {
+            $config['cache_lifetime'] = 120;
+        }
+        if (!isset($config['template_dir'])) {
+            $config['template_dir'] = realpath(resource_path('views'));
+        }
+        if (!isset($config['config_dir'])) {
+            $config['config_dir'] = realpath(resource_path('views'));
+        }
+        if (!isset($config['compile_dir'])) {
+            $config['compile_dir'] = realpath(storage_path('framework/views'));
+        }
+        if (!isset($config['cache_dir'])) {
+            $config['cache_dir'] = realpath(storage_path('framework/cache'));
+        }
+
         foreach($config as $key => $val)
         {
             $reflectionClass = new ReflectionClass($this->smarty);
@@ -106,7 +133,6 @@ class LaravelSmartyFactory extends Factory
      * @param array $parameters
      * @return mixed
      * @throws LaravelSmartyMethodNotFoundException
-     * @throws \ReflectionException
      */
     public function __call($method, $parameters)
     {

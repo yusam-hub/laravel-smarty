@@ -14,7 +14,7 @@ final class LaravelSmarty extends Smarty
     /**
      * @var Factory
      */
-    protected $viewFactory;
+    protected Factory $viewFactory;
 
     /**
      * @param Factory $factory
@@ -27,7 +27,7 @@ final class LaravelSmarty extends Smarty
     /**
      * @return Factory
      */
-    public function getViewFactory()
+    public function getViewFactory(): Factory
     {
         return $this->viewFactory;
     }

@@ -17,7 +17,7 @@ class LaravelSmartyViewEngine implements Engine
     /**
      * @var LaravelSmarty
      */
-    protected $smarty;
+    protected LaravelSmarty $smarty;
 
     /**
      * SmartyEngine constructor.
@@ -34,7 +34,7 @@ class LaravelSmartyViewEngine implements Engine
      * @return string
      * @throws \SmartyException
      */
-    public function get($path, array $data = [])
+    public function get($path, array $data = []): string
     {
         $params = [];
 
@@ -63,7 +63,7 @@ class LaravelSmartyViewEngine implements Engine
      * @param $data
      * @return Application
      */
-    protected function _app($data)
+    protected function _app($data): Application
     {
         return $data['app'];
     }
@@ -72,7 +72,7 @@ class LaravelSmartyViewEngine implements Engine
      * @param $data
      * @return Factory
      */
-    protected function _env($data)
+    protected function _env($data): Factory
     {
         return $data['__env'];
     }
@@ -81,7 +81,7 @@ class LaravelSmartyViewEngine implements Engine
      * @param $data
      * @return ViewErrorBag
      */
-    protected function _error($data)
+    protected function _error($data): ViewErrorBag
     {
         return $data['errors'];
     }
