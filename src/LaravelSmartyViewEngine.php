@@ -4,6 +4,7 @@ namespace YusamHub\LaravelSmarty;
 
 use Illuminate\Contracts\View\Engine;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Factory;
 
@@ -45,14 +46,14 @@ class LaravelSmartyViewEngine implements Engine
 
         $this->smarty->assign($params);
 
-        $this->smarty->assign('app_debug', config("app.debug", false));//todo: ?
         $this->smarty->assign('smarty_debugging', $this->smarty->debugging);
+        $this->smarty->assign('smarty_compile_check', $this->smarty->compile_check);
 
-        $this->smarty->assign("view", [
-            'templateBasePath' => $this->smarty->getTemplateDir(0),//todo: ?
-            'templatePath' => dirname($path) . DIRECTORY_SEPARATOR,//todo: ?
-            'templateFile' => $path,//todo: ?
-            'templateFileBody' => str_replace(".tpl","-body.tpl", $path),//todo: ?
+        $this->smarty->assign("smarty_view", [
+            'templateBasePath' => $this->smarty->getTemplateDir(0),
+            'templatePath' => dirname($path) . DIRECTORY_SEPARATOR,
+            'templateFile' => $path,
+            'templateFileBody' => str_replace(".tpl","-body.tpl", $path),
         ]);
 
         return $this->smarty->fetch($path);

@@ -9,28 +9,27 @@ return [
         ],
 
         'smarty' => [
-            'debugging' => env('SMARTY_DEBUGGING', false),
+            'debugging' => env('SMARTY_DEBUGGING', true),
+
+            'compile_check' => env('SMARTY_COMPILE_CHECK', true),
 
             'caching' => env('SMARTY_CACHING', false),
 
             'cache_lifetime' => env('SMARTY_CACHE_LIFETIME', 120),
 
-            'compile_check' => env('SMARTY_COMPILE_CHECK', false),
+            'template_dir' => realpath(resource_path('views/smarty')),
 
-            'template_dir' => null,
+            'config_dir' => realpath(resource_path('views/smarty')),
 
-            'config_dir' => null,
+            'compile_dir' => realpath(storage_path('smarty/compile')),
 
-            'compile_dir' => null,
-
-            'cache_dir' => null,
+            'cache_dir' => realpath(storage_path('smarty/cache')),
         ],
 
         'view' => [
             'composers' => [
                 '*' => [
-                    //'App\Smarty\Composers\AppComposer',
-                    //'App\Smarty\Composers\AuthComposer',
+                    \YusamHub\LaravelSmarty\LaravelSmartyDefaultComposer::class
                 ],
             ],
         ],
